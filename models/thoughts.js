@@ -1,12 +1,6 @@
 const {Schema, model, Types} = require('mongoose');
 const moment = require('moment');
 
-// schema to create a new thought
-// thought text (string) (required) (between 1 and 280 characters)
-// createdAt (timestamp)
-// username  (string) (required)
-// reactions
-
 const ReactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,

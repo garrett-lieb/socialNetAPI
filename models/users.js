@@ -1,13 +1,6 @@
 const {Schema, model} = require('mongoose');
 const Thought = require('./thoughts');
 
-
-// schema to create a new user
-//username
-//email
-//thoughts
-//friends
-
 const UserSchema = new Schema({
     username: {
         type: String,

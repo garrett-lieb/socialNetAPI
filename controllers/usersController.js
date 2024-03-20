@@ -1,4 +1,3 @@
-const {ObjectID} = require('mongodb');
 const {User, Thought} = require('../models');
 
 // get all users

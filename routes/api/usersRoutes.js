@@ -1,15 +1,3 @@
-// api/users
-
-// get all
-
-// get one
-
-// post
-
-// put to update a user
-
-// delete a user and all their thought
-
 const router = require('express').Router();
 
 const {
