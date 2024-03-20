@@ -1,5 +1,5 @@
 const {ObjectID} = require('mongodb');
-const {User} = require('../models');
+const {User, Thought} = require('../models');
 
 // get all users
 module.exports = {
@@ -21,10 +21,11 @@ module.exports = {
     getUserById({params}, res) {
         User.findOne({_id: params.id})
         .populate({
-            path: 'thoughts',
+            path: 'friends',
             select: '-__v'
         })
         .select('-__v')
+        .populate ("thoughts")
         .then(dbUserData => {
             if(!dbUserData) {
                 res.status(404).json({message: 'No user found with this id'});
@@ -41,7 +42,7 @@ module.exports = {
     createUser({body}, res) {
         User.create(body)
         .then(dbUserData => res.json(dbUserData))
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(500).json(err));
     },
     // update a user by id
     updateUser({params, body}, res) {
@@ -53,7 +54,7 @@ module.exports = {
             }
             res.json(dbUserData);
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(500).json(err));
     },
     // delete a user by id
     deleteUser({params}, res) {
@@ -70,13 +71,13 @@ module.exports = {
         .then(() => {
             res.json({message: 'User and associated thoughts deleted'});
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(500).json(err));
     },
     // add a friend to a user's friend list
     addFriend({params, body}, res ) {
         User.findOneAndUpdate(
             {_id: params.userId},
-            {$push: {friends: params.friendId}},
+            {$addToSet: {friends: params.friendId}},
             {new: true}
         )
         .then(dbUserData => {
@@ -86,10 +87,10 @@ module.exports = {
             }
             res.json(dbUserData);
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(500).json(err));
     },
     // remove a friend from a user's friend list
-    removeFriend({params}, res) {
+    deleteFriend({params}, res) {
         User.findOneAndUpdate(
             {_id: params.userId},
             {$pull: {friends: params.friendId}},
@@ -102,7 +103,7 @@ module.exports = {
             }
             res.json(dbUserData);
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(500).json(err));
     }
 
     // BONUS: Remove a user's associated thoughts when deleted.

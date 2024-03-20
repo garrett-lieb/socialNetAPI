@@ -37,23 +37,19 @@ module.exports = {
         });
     },
     // create a thought
-    createThought({body}, res) {
-        Thought.create(body)
-        .then(({_id}) => {
-            return User.findOneAndUpdate(
-                { _id: body.userId },
-                { $push: { thoughts: _id } },
-                { new: true }
-            );
-        })
-        .then(dbUserData => {
-            if(!dbUserData) {
-                res.status(404).json({message: 'No user found with this id'});
-                return;
-            }
-            res.json(dbUserData);
-        })
-        .catch(err => res.json(err));
+    async createThought({body}, res) { 
+        try {
+           const thought = await Thought.create(body);
+           const userData = await User.findOneAndUpdate(
+            { _id: body.userId },
+            { $push: { thoughts: thought._id } },
+            { new: true }
+        ); 
+        res.json(userData);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json(error);
+        }
     },
     // update a thought by id
     updateThought({params, body}, res) {
