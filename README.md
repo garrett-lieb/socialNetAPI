@@ -4,6 +4,7 @@ a mock social network api including users, their posts ("thoughts") and reaction
 <img src="./assets/2.png" width="100%" height="100%">
 
 Link to Video of Functioning App:
+https://drive.google.com/file/d/1hHd73GA2ICdFFYykp_bduUgb-seHT5mb/view
 
 
 ## Description
