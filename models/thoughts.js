@@ -26,6 +26,11 @@ const ReactionSchema = new Schema({
         type: Date,
         default: Date.now,
         get: (timestamp) => moment(timestamp).format('MMM DD, YYYY [at] hh:mm a')
+    },
+    // associate with the thought
+    thoughtId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
     }
 },
 {
@@ -66,4 +71,7 @@ thoughtSchema.virtual('reactionCount').get(function() {
 });
 
 const Thought = model('Thought', thoughtSchema);
+
 module.exports = Thought;
+
+
