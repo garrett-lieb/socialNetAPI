@@ -56,15 +56,13 @@ async updateUser({params, body}, res) {
             res.status(500).json(error);
         }
     },
-    // delete a user by id
+    // delete a user by id and all their thoughts
 async deleteUser({params}, res) {
         try {
-            const user = await User.findOneAndDelete({_id: params.id});
-            if (!user) {
-                res.status(404).json({message: 'No user found with this id'});
-                return;
-            }
-            res.json(user);
+            const
+            {thoughts} = await User.findOneAndDelete({_id: params.id});
+            await Thought.deleteMany({_id: {$in: thoughts}});
+            res.json({message: 'User and associated thoughts deleted'});
         }
         catch (error) {
             console.log(error);
@@ -109,21 +107,5 @@ async deleteFriend({params}, res) {
             res.status(500).json(error);
         }
     },
-    // delete a user and all their thoughts
-async deleteAllThoughts({params}, res) {
-        try {
-            const user = await User.findOneAndDelete({_id: params.id});
-            if (!user) {
-                res.status(404).json({message: 'No user found with this id'});
-                return;
-            }
-            const thoughts = await Thought.deleteMany({userId: params.id});
-            res.json(user);
-        }
-        catch (error) {
-            console.log(error);
-            res.status(500).json(error);
-        }
-    }
 };
 

@@ -8,7 +8,7 @@
 
 // put to update a user
 
-// delete a user and all their thoughts
+// delete a user and all their thought
 
 const router = require('express').Router();
 

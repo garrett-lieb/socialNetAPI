@@ -107,32 +107,13 @@ async getAllReactions({params}, res) {
         res.status(500).json(error);
     }
 },
-// get one reaction by id
-async getReactionById({params}, res) {
-    try {
-        const thought = await Thought.findOne(
-            { _id: params.thoughtId },
-            {
-                reactions: { $elemMatch: { _id: params.reactionId } }
-            }
-        );
-        if (!thought) {
-            res.status(404).json({ message: 'No thought found with this id' });
-            return;
-        }
-        const reaction = thought.reactions[0];
-        res.json(reaction);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
-    }
-},
+
 // delete a reaction from a thought
 async deleteReaction({params}, res) {
     try {
         const thought = await Thought.findOneAndUpdate(
             { _id: params.thoughtId },
-            { $pull: { reactions: { _id: params.reactionId } } },
+            { $pull: { reactions: { reactionId: params.reactionId } } },
             { new: true }
         );
         if (!thought) {

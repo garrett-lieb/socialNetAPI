@@ -1,5 +1,5 @@
-const {Schema, model} = require('mongoose'); 
-const moment = require('moment');
+const {Schema, model} = require('mongoose');
+const Thought = require('./thoughts');
 
 
 // schema to create a new user
@@ -47,6 +47,12 @@ UserSchema.virtual('friendCount')
 })
 .set(function() {
     return this.friends.length;
+});
+
+UserSchema.pre('remove', function(next) {
+    Thought.remove({ userId: this._id })
+        .then(() => next())
+        .catch(err => next(err));
 });
     
 
