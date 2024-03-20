@@ -1,9 +1,10 @@
 # socialNetAPI
 a mock social network api including users, their posts ("thoughts") and reactions
-<img src="./assets/readme-images/1.png" width="100%" height="100%">
-<img src="./assets/readme-images/2.png" width="100%" height="100%">
-<img src="./assets/readme-images/3.png" width="100%" height="100%">
-<img src="./assets/readme-images/4.png" width="100%" height="100%">
+<img src="./assets/1.png" width="100%" height="100%">
+<img src="./assets/2.png" width="100%" height="100%">
+
+Link to Video of Functioning App:
+
 
 ## Description
 
